@@ -42,8 +42,9 @@ public final class ResourceLoader {
 	public static final String BLACKSCREEN = "330049.png";
 	public static BufferedImage[][] fontCharacters;
 	
-	public static final String[] INTRO_CUTSCENE = {"house2.png", "house1.png"};
-	public static final String[] ENDING_CUTSCENE = {"nightmare.png"};
+	public static final String[] INTRO_CUTSCENE = {"start1.png", "start2.png", "silver1.png", 
+													"silver2.png", "silver3.png", "silver4.png"};
+	public static final String[] ENDING_CUTSCENE = {"dream.png"};
 	
 	public static final SpriteSheet GUI_ITEMS = new SpriteSheet("gui.png", 9, 10, 32, 32);
 	public static final SpriteSheet TS_BUTTONS = new SpriteSheet("buttons.png", 5, 1, 128, 64);
