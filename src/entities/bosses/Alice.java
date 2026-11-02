@@ -36,7 +36,7 @@ public class Alice extends Boss {
 	
 	private int tick = 0;
 	private int action = 0; // 1:slash, 2:dash, 3:patrol, other: idle
-	private int[] actionInterval = {150,4,100,300,200};
+	private int[] actionInterval = {150,4,4,300,100};
 
 	public Alice(float x, float y) {
 		super(BossesKillStatus.ALICE, ResourceLoader.ALICE_SPRITES, 
@@ -165,20 +165,22 @@ public class Alice extends Boss {
 		if (!inAir && !InAttackPhase) {
 			if (tick >= actionInterval[action]) {
 				setNewAction();
-			}
-
-			switch (action) {
-				case 1 -> {
-					warning = action;
+				switch (action) {
+					case 1 -> {
+						warning = 1;
+						tick = 0;
+					}
+					case 2 -> {
+						warning = 2;
+						tick = 0;
+					}
+					default -> setNewAction();
 				}
-				case 2 -> {
-					warning = action;
-					patrol(collisionData, levelWidth, levelHeight, camera);
+			} else {
+				switch (action) {
+					case 2, 3 -> patrol(collisionData, levelWidth, levelHeight, camera);
+					default -> facePlayer(player.getX());
 				}
-				case 3 -> {
-					patrol(collisionData, levelWidth, levelHeight, camera);
-				}
-				default -> facePlayer(player.getX());
 			}
 		} else if (!attacking && warning == 0) {
 			if (inAir) jumpBack(collisionData, levelWidth, levelHeight, camera);
@@ -250,6 +252,10 @@ public class Alice extends Boss {
 		dashing = false;
 		spin = false;
 		currentSpeed = walkSpeed;
+		moving = false;
+		this.xSpeed = 0;
+		action = 0; 
+		tick = 0;
 	}
 
 	@Override public Hitbox getAttackBox() { return this.attackBox; }
